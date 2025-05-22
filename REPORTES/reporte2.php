@@ -8,22 +8,24 @@
 <body>
     <div>
         <?php
-            require 'conexion.php';
-            $sql='select * from proveedor';
+            require '../conexion.php';
+            $idfam=$_GET["idfam"];
+            $sql='select * from categoria where idfamilia=:idfam';
             $ps=$cn->prepare($sql);
+            $ps->bindParam(':idfam',$idfam);
             $ps->execute();
             $filas=$ps->fetchall();    
         ?>
-        <h1>Listado de Familias</h1>
+        <h1>Reporte de Categorias</h1>
         <hr>
-        <a href="guardarproveedor.php">Crear Nuevo</a>
+        <a href="guardarcategorias.php">Crear Nuevo</a>
         <table>
             <thead>
                 <tr>
                     <th>Id</th>
                     <th>Nombre</th>
-                    <th>Ruc</th>
-                    <th>Modificar</th>
+                    <th>Descripción</th>
+                    <th>IdFamilia</th>
                     <th>Borrar</th>
                 </tr>
             </thead>
@@ -35,9 +37,6 @@
                     <td><?=$f[0]?></td>
                     <td><?=$f[1]?></td>
                     <td><?=$f[2]?></td>
-
-                    <td><a href="modificarproveedor.php?idprov=<?=$f[0]?>">Modificar</a></td>
-                    <td><a href="borrarproveedor.php?idprov=<?=$f[0]?>">Borrar</a></td>
                 </tr>
                 <?php
                 }

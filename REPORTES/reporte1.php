@@ -8,26 +8,24 @@
 <body>
     <div>
         <?php
-            require 'conexion.php';
-            $sql='select * from cliente';
+            require '../conexion.php';
+            $idfam=$_GET["idfam"];
+            $sql='select * from vista1 where idfamilia=:idfam';
             $ps=$cn->prepare($sql);
+            $ps->bindParam(':idfam',$idfam);
             $ps->execute();
             $filas=$ps->fetchall();    
         ?>
-        <h1>Listado de Familias</h1>
+        <h1>Reporte de Categorias</h1>
         <hr>
-        <a href="guardarclientes.php">Crear Nuevo</a>
+        <a href="guardarcategorias.php">Crear Nuevo</a>
         <table>
             <thead>
                 <tr>
                     <th>Id</th>
                     <th>Nombre</th>
-                    <th>Apellidos</th>
-                    <th>DNI</th>
-                    <th>Celular</th>
-                    <th>Direccion</th>
-
-                    <th>Modificar</th>
+                    <th>Descripción</th>
+                    <th>IdFamilia</th>
                     <th>Borrar</th>
                 </tr>
             </thead>
@@ -39,12 +37,6 @@
                     <td><?=$f[0]?></td>
                     <td><?=$f[1]?></td>
                     <td><?=$f[2]?></td>
-                    <td><?=$f[3]?></td>
-                    <td><?=$f[4]?></td>
-                    <td><?=$f[5]?></td>
-
-                    <td><a href="modificarclientes.php?idfam=<?=$f[0]?>">Modificar</a></td>
-                    <td><a href="borrarclientes.php?idfam=<?=$f[0]?>">Borrar</a></td>
                 </tr>
                 <?php
                 }
